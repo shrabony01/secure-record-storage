@@ -28,7 +28,7 @@ userSchema.pre("save",async function(){
     }
 });
 //Compare plain-text login password with stored hash
-userSchema.method.isCorrectPassword = async function (password){
+userSchema.methods.isCorrectPassword = async function (password){
     return bcrypt.compare(password,this.password);
 };
 
