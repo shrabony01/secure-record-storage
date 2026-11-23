@@ -20,3 +20,17 @@ const userSchema = new Schema({
     minlength : 5,
   },
 });
+//Automatically hash user password before saving to MongoDB
+userSchema.pre("save",async function(){
+    if(this.isNew || this.isModified("password")){
+        const saltRounds = 10;
+        this.password = await bcrypt.hash(this.password ,saltRounds);
+    }
+});
+//Compare plain-text login password with stored hash
+userSchema.method.isCorrectPassword = async function (password){
+    return bcrypt.compare(password,this.password);
+};
+
+const User = model("User",userSchema);
+export default User;
