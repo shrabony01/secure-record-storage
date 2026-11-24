@@ -5,7 +5,7 @@ const expiration = "2h";
 
 //Middleware to verify JWT and attach user payload to req.user
 export function authMiddleware (req,res, next) {
-    let token = req.body?.token || req.query?.token || req.header.authorization;
+    let token = req.body?.token || req.query?.token || req.headers.authorization;
 
     //Bearer prefix if sent in Authorization header
     if (req.headers.authorization) {
